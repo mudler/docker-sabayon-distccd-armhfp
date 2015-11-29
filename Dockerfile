@@ -5,13 +5,13 @@ MAINTAINER mudler <mudler@sabayonlinux.org>
 # Set locales to en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
+ADD ./ext/qemu-arm-static /usr/bin/qemu-arm-binfmt
+
 RUN rsync -av "rsync://rsync.at.gentoo.org/gentoo-portage/licenses/" "/usr/portage/licenses/" && \
         ls /usr/portage/licenses -1 | xargs -0 > /etc/entropy/packages/license.accept
 
 # Adding repository url
 ADD ./confs/entropy_arm /etc/entropy/repositories.conf.d/entropy_arm
-
-ADD ./ext/qemu-arm-static /usr/bin/qemu-arm-binfmt
 
 RUN equo rescue spmsync &&  equo up && equo u && equo i distcc gcc base-gcc
 
